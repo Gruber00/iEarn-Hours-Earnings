@@ -78,6 +78,8 @@ struct SettingsView: View {
                 Section("settings.app".localized(language)) {
                     LabeledContent("settings.appVersion".localized(language), value: appVersion)
                 }
+
+                CreditsFooter()
             }
             .scrollContentBackground(.hidden)
             .background(AppBackground())

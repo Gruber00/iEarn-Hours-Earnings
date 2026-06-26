@@ -43,6 +43,7 @@ struct LocalizationService {
         "home.hourlyRate": ["de": "Stundenlohn", "en": "Hourly rate", "es": "Tarifa por hora", "fr": "Taux horaire"],
         "home.addWorkTime": ["de": "Arbeitszeit hinzufügen", "en": "Add work time", "es": "Añadir horas de trabajo", "fr": "Ajouter du temps de travail"],
         "home.editWorkTime": ["de": "Arbeitszeit bearbeiten", "en": "Edit work time", "es": "Editar horas de trabajo", "fr": "Modifier le temps de travail"],
+        "home.workEntrySaved": ["de": "Arbeitszeit erfolgreich gespeichert", "en": "Work entry saved successfully", "es": "Jornada guardada correctamente", "fr": "Temps de travail enregistré avec succès"],
         "home.workDays": ["de": "Arbeitstage", "en": "Work days", "es": "Días de trabajo", "fr": "Jours travaillés"],
         "home.emptyTitle": ["de": "Noch keine Arbeitszeiten", "en": "No work times yet", "es": "Aún no hay horas de trabajo", "fr": "Aucun temps de travail"],
         "home.emptyMessage": ["de": "Füge einen Arbeitstag hinzu, um Verdienst und Statistik zu berechnen.", "en": "Add a work day to calculate earnings and statistics.", "es": "Añade un día de trabajo para calcular ingresos y estadísticas.", "fr": "Ajoutez une journée de travail pour calculer les revenus et les statistiques."],

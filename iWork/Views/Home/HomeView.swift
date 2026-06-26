@@ -58,7 +58,7 @@ struct HomeView: View {
                         }
                     }
                     .padding(.horizontal, 20)
-                    .padding(.top, 12)
+                    .padding(.top, 4)
                     .padding(.bottom, 104)
                 }
 
@@ -71,8 +71,7 @@ struct HomeView: View {
                 .padding(preferredHand.horizontalPaddingEdge, 24)
                 .padding(.bottom, 18)
             }
-            .navigationTitle("app.title".localized(language))
-            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(.hidden, for: .navigationBar)
             .animation(.bouncy(duration: 0.42, extraBounce: 0.16), value: settings.preferredHand)
             .sheet(item: $editingEntry) { entry in
                 AddWorkEntrySheet(entry: entry, settings: settings, language: language)

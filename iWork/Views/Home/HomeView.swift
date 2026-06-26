@@ -14,10 +14,11 @@ struct HomeView: View {
 
     private var totalHours: Double { HomeViewModel.totalHours(for: entries) }
     private var totalEarnings: Double { HomeViewModel.totalEarnings(for: entries) }
+    private var preferredHand: PreferredHand { settings.preferredHandValue }
 
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .bottomLeading) {
+            ZStack(alignment: preferredHand.alignment) {
                 AppBackground()
 
                 ScrollView {
@@ -67,11 +68,12 @@ struct HomeView: View {
                         showingEditor = true
                     }
                 }
-                .padding(.leading, 24)
+                .padding(preferredHand.horizontalPaddingEdge, 24)
                 .padding(.bottom, 18)
             }
             .navigationTitle("app.title".localized(language))
             .navigationBarTitleDisplayMode(.inline)
+            .animation(.bouncy(duration: 0.42, extraBounce: 0.16), value: settings.preferredHand)
             .sheet(item: $editingEntry) { entry in
                 AddWorkEntrySheet(entry: entry, settings: settings, language: language)
                     .environment(\.locale, language.locale)

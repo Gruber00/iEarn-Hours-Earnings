@@ -70,6 +70,9 @@ struct LocalizationService {
 
         "settings.title": ["de": "Einstellungen", "en": "Settings", "es": "Ajustes", "fr": "Réglages"],
         "settings.language": ["de": "Sprache", "en": "Language", "es": "Idioma", "fr": "Langue"],
+        "settings.preferredHand": ["de": "Bedienhand", "en": "Preferred hand", "es": "Mano preferida", "fr": "Main préférée"],
+        "settings.preferredHand.left": ["de": "Linkshänder", "en": "Left-handed", "es": "Zurdo", "fr": "Gaucher"],
+        "settings.preferredHand.right": ["de": "Rechtshänder", "en": "Right-handed", "es": "Diestro", "fr": "Droitier"],
         "settings.currency": ["de": "Währung", "en": "Currency", "es": "Moneda", "fr": "Devise"],
         "settings.hourlyRate": ["de": "Stundenlohn", "en": "Hourly rate", "es": "Tarifa por hora", "fr": "Taux horaire"],
         "settings.defaultPause": ["de": "Standardpause", "en": "Default break", "es": "Pausa predeterminada", "fr": "Pause par défaut"],

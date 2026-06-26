@@ -6,20 +6,27 @@ final class SettingsModel {
     var currency: String
     var defaultPause: Int
     var selectedLanguage: String = AppLanguage.german.languageCode
+    var preferredHand: String = PreferredHand.left.rawValue
 
     init(
         hourlyRate: Double = 18.5,
         currency: String = "€",
         defaultPause: Int = 30,
-        selectedLanguage: String = AppLanguage.german.languageCode
+        selectedLanguage: String = AppLanguage.german.languageCode,
+        preferredHand: String = PreferredHand.left.rawValue
     ) {
         self.hourlyRate = hourlyRate
         self.currency = currency
         self.defaultPause = defaultPause
         self.selectedLanguage = selectedLanguage
+        self.preferredHand = preferredHand
     }
 
     var appLanguage: AppLanguage {
         AppLanguage(languageCode: selectedLanguage)
+    }
+
+    var preferredHandValue: PreferredHand {
+        PreferredHand(storedValue: preferredHand)
     }
 }

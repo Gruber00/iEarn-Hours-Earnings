@@ -34,6 +34,14 @@ struct SettingsView: View {
                     }
                 }
 
+                Section("settings.preferredHand".localized(language)) {
+                    Picker("settings.preferredHand".localized(language), selection: $settings.preferredHand) {
+                        ForEach(PreferredHand.allCases) { hand in
+                            Text(hand.displayKey.localized(language)).tag(hand.rawValue)
+                        }
+                    }
+                }
+
                 Section("settings.currency".localized(language)) {
                     CurrencyPicker(currency: $settings.currency, language: language)
                 }

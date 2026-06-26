@@ -5,6 +5,7 @@
 //  Created by Felix on 26.06.26.
 //
 
+import SwiftData
 import SwiftUI
 
 @main
@@ -13,5 +14,6 @@ struct iWorkApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: [WorkEntry.self, SettingsModel.self])
     }
 }

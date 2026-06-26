@@ -6,6 +6,7 @@ struct StatisticsView: View {
     let language: AppLanguage
 
     @State private var selectedMonth = Date()
+    @State private var showingGoalDetails = false
 
     private var monthEntries: [WorkEntry] {
         StatisticsViewModel.monthEntries(from: entries, selectedMonth: selectedMonth)
@@ -15,11 +16,32 @@ struct StatisticsView: View {
         StatisticsViewModel.dailySummaries(from: monthEntries)
     }
 
+    private var goalProgress: GoalProgress {
+        StatisticsViewModel.goalProgress(for: monthEntries, settings: settings)
+    }
+
+    private var goalSegments: [GoalChartSegment] {
+        StatisticsViewModel.goalChartSegments(for: goalProgress)
+    }
+
+    private var dailyShares: [DailyEarningsShare] {
+        StatisticsViewModel.dailyEarningsShares(from: monthEntries)
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     MonthStepper(selectedMonth: $selectedMonth, language: language)
+
+                    GoalPieChart(
+                        progress: goalProgress,
+                        segments: goalSegments,
+                        currency: settings.currency,
+                        language: language
+                    ) {
+                        showingGoalDetails = true
+                    }
 
                     ChartCard(title: "statistics.hoursPerDay".localized(language), symbol: "chart.xyaxis.line") {
                         HoursChart(data: dailySummaries, language: language)
@@ -43,6 +65,19 @@ struct StatisticsView: View {
             }
             .background(AppBackground())
             .navigationTitle("statistics.title".localized(language))
+            .sheet(isPresented: $showingGoalDetails) {
+                GoalPieChartDetailSheet(
+                    progress: goalProgress,
+                    segments: goalSegments,
+                    dailyShares: dailyShares,
+                    currency: settings.currency,
+                    language: language
+                )
+                .environment(\.locale, language.locale)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+                .presentationBackground(.thinMaterial)
+            }
         }
     }
 }

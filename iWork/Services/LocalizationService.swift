@@ -76,6 +76,18 @@ struct LocalizationService {
         "settings.currency": ["de": "Währung", "en": "Currency", "es": "Moneda", "fr": "Devise"],
         "settings.hourlyRate": ["de": "Stundenlohn", "en": "Hourly rate", "es": "Tarifa por hora", "fr": "Taux horaire"],
         "settings.defaultPause": ["de": "Standardpause", "en": "Default break", "es": "Pausa predeterminada", "fr": "Pause par défaut"],
+        "goal.monthlyGoal": ["de": "Monatsziel", "en": "Monthly goal", "es": "Objetivo mensual", "fr": "Objectif mensuel"],
+        "goal.goalAmount": ["de": "Zielbetrag", "en": "Goal amount", "es": "Importe objetivo", "fr": "Montant objectif"],
+        "goal.earnedThisMonth": ["de": "Diesen Monat verdient", "en": "Earned this month", "es": "Ganado este mes", "fr": "Gagné ce mois-ci"],
+        "goal.remainingToGoal": ["de": "Noch offen bis zum Ziel", "en": "Remaining to goal", "es": "Restante para el objetivo", "fr": "Restant jusqu’à l’objectif"],
+        "goal.goalReached": ["de": "Ziel erreicht", "en": "Goal reached", "es": "Objetivo alcanzado", "fr": "Objectif atteint"],
+        "goal.goalProgress": ["de": "Zielfortschritt", "en": "Goal progress", "es": "Progreso del objetivo", "fr": "Progression de l’objectif"],
+        "goal.dailyEarningsShare": ["de": "Tagesanteile am Verdienst", "en": "Daily earnings share", "es": "Participación diaria en ingresos", "fr": "Part quotidienne des revenus"],
+        "goal.topEarningDay": ["de": "Bester Verdiensttag", "en": "Top earning day", "es": "Mejor día de ingresos", "fr": "Meilleur jour de revenus"],
+        "goal.goalDetails": ["de": "Zieldetails", "en": "Goal details", "es": "Detalles del objetivo", "fr": "Détails de l’objectif"],
+        "goal.alreadyEarned": ["de": "Bereits verdient", "en": "Already earned", "es": "Ya ganado", "fr": "Déjà gagné"],
+        "goal.remaining": ["de": "Noch offen", "en": "Remaining", "es": "Restante", "fr": "Restant"],
+        "goal.tapToViewDetails": ["de": "Zum Vergrößern antippen", "en": "Tap to view details", "es": "Toca para ver detalles", "fr": "Appuyer pour agrandir"],
         "settings.app": ["de": "App", "en": "App", "es": "App", "fr": "App"],
         "settings.appVersion": ["de": "App-Version", "en": "App version", "es": "Versión de la app", "fr": "Version de l’app"]
     ]

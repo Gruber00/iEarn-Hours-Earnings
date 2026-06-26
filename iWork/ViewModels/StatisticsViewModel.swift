@@ -17,6 +17,18 @@ struct StatisticsViewModel {
         StatisticsCalculator.dailySummaries(from: entries)
     }
 
+    static func goalProgress(for entries: [WorkEntry], settings: SettingsModel) -> GoalProgress {
+        GoalService.progress(entries: entries, goalAmount: settings.monthlyGoalAmount)
+    }
+
+    static func goalChartSegments(for progress: GoalProgress) -> [GoalChartSegment] {
+        GoalService.chartSegments(for: progress)
+    }
+
+    static func dailyEarningsShares(from entries: [WorkEntry]) -> [DailyEarningsShare] {
+        GoalService.dailyEarningsShares(entries: entries)
+    }
+
     static func totalHours(for entries: [WorkEntry]) -> Double {
         StatisticsCalculator.totalHours(entries)
     }

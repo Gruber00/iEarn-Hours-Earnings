@@ -12,4 +12,13 @@ struct SampleData {
             hourlyRate: settings.hourlyRate
         )
     ]
+
+    static let badges: [AchievementBadge] = AchievementService.defaultBadges.map {
+        AchievementBadge(
+            title: $0.title,
+            descriptionText: $0.descriptionText,
+            requiredAmount: $0.requiredAmount,
+            symbolName: $0.symbolName
+        )
+    }
 }

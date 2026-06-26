@@ -5,4 +5,8 @@ struct DatabaseManager {
         guard settings.isEmpty else { return }
         context.insert(SettingsModel())
     }
+
+    static func ensureAchievementBadgesExist(badges: [AchievementBadge], in context: ModelContext) {
+        AchievementService.ensureDefaultBadgesExist(badges: badges, in: context)
+    }
 }

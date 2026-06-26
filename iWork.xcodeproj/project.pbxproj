@@ -34,6 +34,13 @@
 			children = (
 				C31B0BB82FEF2B09004F1CC5 /* iWork */,
 				C31B0BB72FEF2B09004F1CC5 /* Products */,
+				C399A6782FEF373100A5F385 /* App */,
+				C399A6792FEF373200A5F385 /* Models */,
+				C399A67A2FEF373200A5F385 /* ViewModels */,
+				C399A67B2FEF373400A5F385 /* Persistence */,
+				C399A67C2FEF373500A5F385 /* Services */,
+				C399A67D2FEF373600A5F385 /* Extensions */,
+				C399A67E2FEF373A00A5F385 /* Views */,
 			);
 			sourceTree = "<group>";
 		};
@@ -43,6 +50,87 @@
 				C31B0BB62FEF2B09004F1CC5 /* iWork.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C399A6782FEF373100A5F385 /* App */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		C399A6792FEF373200A5F385 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C399A67A2FEF373200A5F385 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		C399A67B2FEF373400A5F385 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		C399A67C2FEF373500A5F385 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		C399A67D2FEF373600A5F385 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C399A67E2FEF373A00A5F385 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C399A67F2FEF373E00A5F385 /* Home */,
+				C399A6802FEF373F00A5F385 /* Statistics */,
+				C399A6812FEF373F00A5F385 /* Settings */,
+				C399A6822FEF374000A5F385 /* Components */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C399A67F2FEF373E00A5F385 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		C399A6802FEF373F00A5F385 /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
+		C399A6812FEF373F00A5F385 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		C399A6822FEF374000A5F385 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

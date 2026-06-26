@@ -4,6 +4,7 @@ struct TrophyDetailSheet: View {
     let badge: AchievementBadge
     let totalEarnings: Double
     let currency: String
+    let language: AppLanguage
 
     var body: some View {
         NavigationStack {
@@ -17,22 +18,22 @@ struct TrophyDetailSheet: View {
                         .padding(.top, 24)
 
                     VStack(spacing: 8) {
-                        Text(badge.title)
+                        Text(TrophiesViewModel.title(for: badge, language: language))
                             .font(.largeTitle.bold())
                             .multilineTextAlignment(.center)
 
-                        Text(badge.descriptionText)
+                        Text(TrophiesViewModel.description(for: badge, language: language))
                             .font(.body)
                             .foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                     }
 
                     VStack(spacing: 14) {
-                        LabeledContent("Benötigter Betrag", value: badge.requiredAmount.formattedMoney(currency: currency))
-                        LabeledContent("Aktueller Fortschritt", value: TrophiesViewModel.progressText(for: badge, totalEarnings: totalEarnings, currency: currency))
-                        LabeledContent("Status", value: TrophiesViewModel.statusText(for: badge))
+                        LabeledContent("trophies.requiredAmount".localized(language), value: badge.requiredAmount.formattedMoney(currency: currency, language: language))
+                        LabeledContent("trophies.currentProgress".localized(language), value: TrophiesViewModel.progressText(for: badge, totalEarnings: totalEarnings, currency: currency, language: language))
+                        LabeledContent("common.status".localized(language), value: TrophiesViewModel.statusText(for: badge, language: language))
 
-                        if let unlockedText = TrophiesViewModel.unlockedDateText(for: badge) {
+                        if let unlockedText = TrophiesViewModel.unlockedDateText(for: badge, language: language) {
                             Text(unlockedText)
                                 .font(.subheadline.weight(.semibold))
                                 .foregroundStyle(.green)
@@ -48,7 +49,7 @@ struct TrophyDetailSheet: View {
                 .padding(20)
             }
             .background(AppBackground())
-            .navigationTitle("Trophäe")
+            .navigationTitle("trophies.detailTitle".localized(language))
             .navigationBarTitleDisplayMode(.inline)
         }
     }

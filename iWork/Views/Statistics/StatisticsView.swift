@@ -3,6 +3,7 @@ import SwiftUI
 struct StatisticsView: View {
     let entries: [WorkEntry]
     let settings: SettingsModel
+    let language: AppLanguage
 
     @State private var selectedMonth = Date()
 
@@ -18,30 +19,30 @@ struct StatisticsView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    MonthStepper(selectedMonth: $selectedMonth)
+                    MonthStepper(selectedMonth: $selectedMonth, language: language)
 
-                    ChartCard(title: "Arbeitsstunden pro Tag", symbol: "chart.xyaxis.line") {
-                        HoursChart(data: dailySummaries)
+                    ChartCard(title: "statistics.hoursPerDay".localized(language), symbol: "chart.xyaxis.line") {
+                        HoursChart(data: dailySummaries, language: language)
                     }
 
-                    ChartCard(title: "Verdienst pro Tag", symbol: "banknote.fill") {
-                        EarningsChart(data: dailySummaries, currency: settings.currency)
+                    ChartCard(title: "statistics.earningsPerDay".localized(language), symbol: "banknote.fill") {
+                        EarningsChart(data: dailySummaries, currency: settings.currency, language: language)
                     }
 
                     VStack(spacing: 12) {
-                        StatisticRow(title: "Gesamtstunden", value: StatisticsViewModel.totalHours(for: monthEntries).appHoursAndMinutesText, symbol: "clock.fill")
-                        StatisticRow(title: "Gesamtverdienst", value: StatisticsViewModel.totalEarnings(for: monthEntries).formattedMoney(currency: settings.currency), symbol: "banknote.fill")
-                        StatisticRow(title: "Durchschnitt Stunden", value: StatisticsViewModel.averageHours(for: monthEntries).appDecimalHoursText, symbol: "chart.line.uptrend.xyaxis")
-                        StatisticRow(title: "Durchschnitt Verdienst", value: StatisticsViewModel.averageEarnings(for: monthEntries).formattedMoney(currency: settings.currency), symbol: "divide.circle.fill")
-                        StatisticRow(title: "Anzahl Arbeitstage", value: "\(monthEntries.count)", symbol: "calendar")
-                        StatisticRow(title: "Längster Arbeitstag", value: StatisticsViewModel.longestDay(for: monthEntries).appDecimalHoursText, symbol: "timer")
+                        StatisticRow(title: "statistics.totalHours".localized(language), value: StatisticsViewModel.totalHours(for: monthEntries).appHoursAndMinutesText(language: language), symbol: "clock.fill")
+                        StatisticRow(title: "statistics.totalEarnings".localized(language), value: StatisticsViewModel.totalEarnings(for: monthEntries).formattedMoney(currency: settings.currency, language: language), symbol: "banknote.fill")
+                        StatisticRow(title: "statistics.averageHours".localized(language), value: StatisticsViewModel.averageHours(for: monthEntries).appDecimalHoursText(language: language), symbol: "chart.line.uptrend.xyaxis")
+                        StatisticRow(title: "statistics.averageEarnings".localized(language), value: StatisticsViewModel.averageEarnings(for: monthEntries).formattedMoney(currency: settings.currency, language: language), symbol: "divide.circle.fill")
+                        StatisticRow(title: "statistics.workDayCount".localized(language), value: "\(monthEntries.count)", symbol: "calendar")
+                        StatisticRow(title: "statistics.longestDay".localized(language), value: StatisticsViewModel.longestDay(for: monthEntries).appDecimalHoursText(language: language), symbol: "timer")
                     }
                 }
                 .padding(20)
                 .padding(.bottom, 24)
             }
             .background(AppBackground())
-            .navigationTitle("Statistik")
+            .navigationTitle("statistics.title".localized(language))
         }
     }
 }

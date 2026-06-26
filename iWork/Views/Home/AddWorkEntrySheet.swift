@@ -7,6 +7,7 @@ struct AddWorkEntrySheet: View {
 
     let entry: WorkEntry?
     let settings: SettingsModel
+    let language: AppLanguage
 
     @State private var date: Date
     @State private var startTime: Date
@@ -18,9 +19,10 @@ struct AddWorkEntrySheet: View {
         EarningsCalculator.workedHours(startTime: startTime, endTime: endTime, pauseMinutes: pauseMinutes)
     }
 
-    init(entry: WorkEntry?, settings: SettingsModel) {
+    init(entry: WorkEntry?, settings: SettingsModel, language: AppLanguage) {
         self.entry = entry
         self.settings = settings
+        self.language = language
 
         _date = State(initialValue: entry?.date ?? .now)
         _startTime = State(initialValue: entry?.startTime ?? DateHelper.dateAt(hour: 8, minute: 0))
@@ -32,39 +34,39 @@ struct AddWorkEntrySheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Arbeitszeit") {
-                    DatePicker("Datum", selection: $date, displayedComponents: .date)
-                    DatePicker("Beginn", selection: $startTime, displayedComponents: .hourAndMinute)
-                    DatePicker("Ende", selection: $endTime, displayedComponents: .hourAndMinute)
+                Section("home.workTime".localized(language)) {
+                    DatePicker("home.date".localized(language), selection: $date, displayedComponents: .date)
+                    DatePicker("home.start".localized(language), selection: $startTime, displayedComponents: .hourAndMinute)
+                    DatePicker("home.end".localized(language), selection: $endTime, displayedComponents: .hourAndMinute)
 
-                    Picker("Pause", selection: $pauseMinutes) {
+                    Picker("home.pause".localized(language), selection: $pauseMinutes) {
                         ForEach(SettingsViewModel.pauseOptions, id: \.self) { minutes in
-                            Text("\(minutes) Minuten").tag(minutes)
+                            Text("\(minutes) \("common.minutes".localized(language))").tag(minutes)
                         }
                     }
                 }
 
-                Section("Notiz") {
-                    TextField("Optional", text: $note, axis: .vertical)
+                Section("home.note".localized(language)) {
+                    TextField("common.optional".localized(language), text: $note, axis: .vertical)
                         .lineLimit(2...4)
                 }
 
-                Section("Berechnung") {
-                    LabeledContent("Arbeitszeit", value: calculatedHours.appHoursAndMinutesText)
-                    LabeledContent("Verdienst", value: EarningsCalculator.earnings(workedHours: calculatedHours, hourlyRate: settings.hourlyRate).formattedMoney(currency: settings.currency))
+                Section("home.calculation".localized(language)) {
+                    LabeledContent("home.workTime".localized(language), value: calculatedHours.appHoursAndMinutesText(language: language))
+                    LabeledContent("home.earnings".localized(language), value: EarningsCalculator.earnings(workedHours: calculatedHours, hourlyRate: settings.hourlyRate).formattedMoney(currency: settings.currency, language: language))
                 }
             }
             .scrollContentBackground(.hidden)
             .background(AppBackground())
-            .navigationTitle(entry == nil ? "Arbeitszeit hinzufügen" : "Arbeitszeit bearbeiten")
+            .navigationTitle(entry == nil ? "home.addWorkTime".localized(language) : "home.editWorkTime".localized(language))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Abbrechen") { dismiss() }
+                    Button("common.cancel".localized(language)) { dismiss() }
                         .glassButtonIfAvailable()
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Speichern", action: save)
+                    Button("common.save".localized(language), action: save)
                         .fontWeight(.semibold)
                         .glassProminentIfAvailable()
                 }

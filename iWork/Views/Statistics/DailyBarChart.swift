@@ -6,11 +6,12 @@ struct DailyBarChart: View {
     let value: KeyPath<DailySummary, Double>
     let color: Color
     let label: String
+    let language: AppLanguage
 
     var body: some View {
         Chart(data) { item in
             BarMark(
-                x: .value("Tag", item.day),
+                x: .value("statistics.dayAxis".localized(language), item.day),
                 y: .value(label, item[keyPath: value])
             )
             .foregroundStyle(color.gradient)

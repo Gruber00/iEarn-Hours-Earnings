@@ -4,6 +4,7 @@ struct TrophyCard: View {
     let badge: AchievementBadge
     let totalEarnings: Double
     let currency: String
+    let language: AppLanguage
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -14,20 +15,20 @@ struct TrophyCard: View {
                 .symbolEffect(.bounce, value: badge.isUnlocked)
 
             VStack(alignment: .leading, spacing: 6) {
-                Text(badge.title)
+                Text(TrophiesViewModel.title(for: badge, language: language))
                     .font(.title3.bold())
 
-                Text(badge.descriptionText)
+                Text(TrophiesViewModel.description(for: badge, language: language))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .lineLimit(2)
             }
 
             VStack(alignment: .leading, spacing: 8) {
-                LabeledContent("Benötigt", value: badge.requiredAmount.formattedMoney(currency: currency))
-                LabeledContent("Status", value: TrophiesViewModel.statusText(for: badge))
+                LabeledContent("trophies.requiredAmount".localized(language), value: badge.requiredAmount.formattedMoney(currency: currency, language: language))
+                LabeledContent("common.status".localized(language), value: TrophiesViewModel.statusText(for: badge, language: language))
 
-                if let unlockedText = TrophiesViewModel.unlockedDateText(for: badge) {
+                if let unlockedText = TrophiesViewModel.unlockedDateText(for: badge, language: language) {
                     Text(unlockedText)
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -35,7 +36,7 @@ struct TrophyCard: View {
                     ProgressView(value: TrophiesViewModel.progress(for: badge, totalEarnings: totalEarnings))
                         .tint(.green)
 
-                    Text(TrophiesViewModel.progressText(for: badge, totalEarnings: totalEarnings, currency: currency))
+                    Text(TrophiesViewModel.progressText(for: badge, totalEarnings: totalEarnings, currency: currency, language: language))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }

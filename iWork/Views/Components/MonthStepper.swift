@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MonthStepper: View {
     @Binding var selectedMonth: Date
+    let language: AppLanguage
     @State private var directionPulse = 0
 
     var body: some View {
@@ -13,9 +14,9 @@ struct MonthStepper: View {
                     .symbolEffect(.bounce, value: directionPulse)
             }
             .glassButtonIfAvailable()
-            .accessibilityLabel("Vorheriger Monat")
+            .accessibilityLabel("home.previousMonth".localized(language))
 
-            Text(selectedMonth.appMonthTitle)
+            Text(selectedMonth.appMonthTitle(language: language))
                 .font(.title3.bold())
                 .frame(maxWidth: .infinity)
                 .lineLimit(1)
@@ -28,7 +29,7 @@ struct MonthStepper: View {
                     .symbolEffect(.bounce, value: directionPulse)
             }
             .glassButtonIfAvailable()
-            .accessibilityLabel("Nächster Monat")
+            .accessibilityLabel("home.nextMonth".localized(language))
         }
         .padding(8)
         .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))

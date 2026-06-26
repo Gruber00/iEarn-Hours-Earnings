@@ -4,6 +4,7 @@ struct TrophiesView: View {
     let badges: [AchievementBadge]
     let entries: [WorkEntry]
     let settings: SettingsModel
+    let language: AppLanguage
 
     @State private var selectedBadge: AchievementBadge?
 
@@ -20,10 +21,10 @@ struct TrophiesView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Trophäen")
+                        Text("trophies.title".localized(language))
                             .font(.largeTitle.bold())
 
-                        Text("Verdiene Geld und schalte Meilensteine frei.")
+                        Text("trophies.subtitle".localized(language))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -33,7 +34,8 @@ struct TrophiesView: View {
                         TrophyCard(
                             badge: badge,
                             totalEarnings: totalEarnings,
-                            currency: settings.currency
+                            currency: settings.currency,
+                            language: language
                         )
                         .contentShape(.rect)
                         .onTapGesture { selectedBadge = badge }
@@ -43,14 +45,16 @@ struct TrophiesView: View {
                 .padding(.bottom, 24)
             }
             .background(AppBackground())
-            .navigationTitle("Trophäen")
+            .navigationTitle("trophies.title".localized(language))
             .navigationBarTitleDisplayMode(.inline)
             .sheet(item: $selectedBadge) { badge in
                 TrophyDetailSheet(
                     badge: badge,
                     totalEarnings: totalEarnings,
-                    currency: settings.currency
+                    currency: settings.currency,
+                    language: language
                 )
+                .environment(\.locale, language.locale)
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
                 .presentationBackground(.thinMaterial)

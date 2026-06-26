@@ -3,6 +3,7 @@ import SwiftUI
 struct WorkEntryRow: View {
     let entry: WorkEntry
     let settings: SettingsModel
+    let language: AppLanguage
 
     var body: some View {
         HStack(spacing: 14) {
@@ -13,10 +14,10 @@ struct WorkEntryRow: View {
                 .background(.green.opacity(0.12), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
 
             VStack(alignment: .leading, spacing: 5) {
-                Text(entry.date.appDayTitle)
+                Text(entry.date.appDayTitle(language: language))
                     .font(.headline)
 
-                Text("\(entry.startTime.formatted(date: .omitted, time: .shortened)) - \(entry.endTime.formatted(date: .omitted, time: .shortened))")
+                Text("\(entry.startTime.appTimeText(language: language)) - \(entry.endTime.appTimeText(language: language))")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
@@ -24,10 +25,10 @@ struct WorkEntryRow: View {
             Spacer(minLength: 10)
 
             VStack(alignment: .trailing, spacing: 5) {
-                Text(entry.workedHours.appDecimalHoursText)
+                Text(entry.workedHours.appDecimalHoursText(language: language))
                     .font(.headline)
 
-                Text(entry.earnedMoney.formattedMoney(currency: settings.currency))
+                Text(entry.earnedMoney.formattedMoney(currency: settings.currency, language: language))
                     .font(.subheadline.bold())
                     .foregroundStyle(.green)
                     .contentTransition(.numericText())

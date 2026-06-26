@@ -4,6 +4,7 @@ import SwiftUI
 struct HomeView: View {
     let entries: [WorkEntry]
     let settings: SettingsModel
+    let language: AppLanguage
     @Binding var selectedMonth: Date
     @Binding var showingEditor: Bool
 
@@ -16,36 +17,37 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .bottomTrailing) {
+            ZStack(alignment: .bottomLeading) {
                 AppBackground()
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 22) {
-                        MonthStepper(selectedMonth: $selectedMonth)
+                        MonthStepper(selectedMonth: $selectedMonth, language: language)
 
                         EarningsCard(
                             totalEarnings: totalEarnings,
                             totalHours: totalHours,
-                            settings: settings
+                            settings: settings,
+                            language: language
                         )
 
                         VStack(alignment: .leading, spacing: 12) {
-                            Text("Arbeitstage")
+                            Text("home.workDays".localized(language))
                                 .font(.title2.bold())
 
                             if entries.isEmpty {
-                                EmptyMonthView()
+                                EmptyMonthView(language: language)
                             } else {
                                 LazyVStack(spacing: 12) {
                                     ForEach(entries) { entry in
-                                        WorkEntryRow(entry: entry, settings: settings)
+                                        WorkEntryRow(entry: entry, settings: settings, language: language)
                                             .contentShape(.rect)
                                             .onTapGesture { editingEntry = entry }
                                             .swipeActions(edge: .trailing) {
                                                 Button(role: .destructive) {
                                                     delete(entry)
                                                 } label: {
-                                                    Label("Löschen", systemImage: "trash.fill")
+                                                    Label("common.delete".localized(language), systemImage: "trash.fill")
                                                 }
                                             }
                                     }
@@ -59,19 +61,20 @@ struct HomeView: View {
                     .padding(.bottom, 104)
                 }
 
-                GlassFloatingButton(isAnimating: addButtonBounce) {
+                GlassFloatingButton(isAnimating: addButtonBounce, language: language) {
                     addButtonBounce.toggle()
                     withAnimation(.bouncy(duration: 0.38, extraBounce: 0.18)) {
                         showingEditor = true
                     }
                 }
-                .padding(.trailing, 24)
+                .padding(.leading, 24)
                 .padding(.bottom, 18)
             }
-            .navigationTitle("Work Hours")
+            .navigationTitle("app.title".localized(language))
             .navigationBarTitleDisplayMode(.inline)
             .sheet(item: $editingEntry) { entry in
-                AddWorkEntrySheet(entry: entry, settings: settings)
+                AddWorkEntrySheet(entry: entry, settings: settings, language: language)
+                    .environment(\.locale, language.locale)
                     .presentationDetents([.medium, .large])
                     .presentationDragIndicator(.visible)
                     .presentationBackground(.thinMaterial)

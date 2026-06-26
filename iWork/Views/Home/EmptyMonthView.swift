@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct EmptyMonthView: View {
+    let language: AppLanguage
+
     var body: some View {
         VStack(spacing: 12) {
             Image(systemName: "calendar.badge.plus")
@@ -8,10 +10,10 @@ struct EmptyMonthView: View {
                 .foregroundStyle(.green)
                 .symbolRenderingMode(.hierarchical)
 
-            Text("Noch keine Arbeitszeiten")
+            Text("home.emptyTitle".localized(language))
                 .font(.headline)
 
-            Text("Füge einen Arbeitstag hinzu, um Verdienst und Statistik zu berechnen.")
+            Text("home.emptyMessage".localized(language))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)

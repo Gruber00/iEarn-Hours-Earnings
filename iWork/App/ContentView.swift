@@ -15,7 +15,7 @@ struct ContentView: View {
         let entrySignature = entries
             .map { "\($0.id.uuidString)-\($0.workedHours)-\($0.earnedMoney)" }
             .joined(separator: "|")
-        let settingsSignature = settingsItems.first.map { "\($0.hourlyRate)-\($0.currency)" } ?? "no-settings"
+        let settingsSignature = settingsItems.first.map { "\($0.hourlyRate)-\($0.currency)-\($0.selectedLanguage)" } ?? "no-settings"
         let badgeSignature = badges
             .map { "\($0.requiredAmount)-\($0.isUnlocked)-\($0.unlockedAt?.timeIntervalSince1970 ?? 0)" }
             .joined(separator: "|")
@@ -25,32 +25,38 @@ struct ContentView: View {
     var body: some View {
         Group {
             if let settings = settingsItems.first {
+                let language = settings.appLanguage
+
                 TabView(selection: $selectedTab) {
                     HomeView(
                         entries: HomeViewModel.monthEntries(from: entries, selectedMonth: selectedMonth),
                         settings: settings,
+                        language: language,
                         selectedMonth: $selectedMonth,
                         showingEditor: $showingEditor
                     )
                     .tag(AppTab.home)
-                    .tabItem { Label("Home", systemImage: "house.fill") }
+                    .tabItem { Label("tab.home".localized(language), systemImage: "house.fill") }
 
-                    StatisticsView(entries: entries, settings: settings)
+                    StatisticsView(entries: entries, settings: settings, language: language)
                         .tag(AppTab.statistics)
-                        .tabItem { Label("Statistik", systemImage: "chart.bar.fill") }
+                        .tabItem { Label("tab.statistics".localized(language), systemImage: "chart.bar.fill") }
 
-                    TrophiesView(badges: badges, entries: entries, settings: settings)
+                    TrophiesView(badges: badges, entries: entries, settings: settings, language: language)
                         .tag(AppTab.trophies)
-                        .tabItem { Label("Trophäen", systemImage: "trophy.fill") }
+                        .tabItem { Label("tab.trophies".localized(language), systemImage: "trophy.fill") }
 
-                    SettingsView(settings: settings, allEntries: entries)
+                    SettingsView(settings: settings, allEntries: entries, language: language)
                         .tag(AppTab.settings)
-                        .tabItem { Label("Einstellungen", systemImage: "gearshape.fill") }
+                        .tabItem { Label("tab.settings".localized(language), systemImage: "gearshape.fill") }
                 }
                 .tint(.green)
+                .environment(\.locale, language.locale)
                 .animation(.snappy, value: selectedTab)
+                .animation(.snappy, value: settings.selectedLanguage)
                 .sheet(isPresented: $showingEditor) {
-                    AddWorkEntrySheet(entry: nil, settings: settings)
+                    AddWorkEntrySheet(entry: nil, settings: settings, language: language)
+                        .environment(\.locale, language.locale)
                         .presentationDetents([.medium, .large])
                         .presentationDragIndicator(.visible)
                         .presentationBackground(.thinMaterial)

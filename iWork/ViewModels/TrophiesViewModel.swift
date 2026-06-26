@@ -14,16 +14,33 @@ struct TrophiesViewModel {
         return min(totalEarnings / badge.requiredAmount, 1)
     }
 
-    static func progressText(for badge: AchievementBadge, totalEarnings: Double, currency: String) -> String {
-        "\(min(totalEarnings, badge.requiredAmount).formattedMoney(currency: currency)) / \(badge.requiredAmount.formattedMoney(currency: currency))"
+    static func title(for badge: AchievementBadge, language: AppLanguage) -> String {
+        trophyKey(for: badge, suffix: "title").localized(language)
     }
 
-    static func statusText(for badge: AchievementBadge) -> String {
-        badge.isUnlocked ? "Freigeschaltet" : "Noch nicht freigeschaltet"
+    static func description(for badge: AchievementBadge, language: AppLanguage) -> String {
+        trophyKey(for: badge, suffix: "description").localized(language)
     }
 
-    static func unlockedDateText(for badge: AchievementBadge) -> String? {
+    static func progressText(for badge: AchievementBadge, totalEarnings: Double, currency: String, language: AppLanguage) -> String {
+        "\(min(totalEarnings, badge.requiredAmount).formattedMoney(currency: currency, language: language)) / \(badge.requiredAmount.formattedMoney(currency: currency, language: language))"
+    }
+
+    static func statusText(for badge: AchievementBadge, language: AppLanguage) -> String {
+        (badge.isUnlocked ? "trophies.unlocked" : "trophies.locked").localized(language)
+    }
+
+    static func unlockedDateText(for badge: AchievementBadge, language: AppLanguage) -> String? {
         guard let unlockedAt = badge.unlockedAt else { return nil }
-        return "Freigeschaltet am " + unlockedAt.formatted(.dateTime.day().month().year().hour().minute())
+        return "\("trophies.unlockedAt".localized(language)) \(unlockedAt.appDateTimeText(language: language))"
+    }
+
+    private static func trophyKey(for badge: AchievementBadge, suffix: String) -> String {
+        switch Int(badge.requiredAmount) {
+        case 100: "trophies.100.\(suffix)"
+        case 500: "trophies.500.\(suffix)"
+        case 1_000: "trophies.1000.\(suffix)"
+        default: suffix == "title" ? badge.title : badge.descriptionText
+        }
     }
 }

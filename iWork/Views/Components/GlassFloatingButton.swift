@@ -2,6 +2,7 @@ import SwiftUI
 
 struct GlassFloatingButton: View {
     let isAnimating: Bool
+    let language: AppLanguage
     let action: () -> Void
 
     var body: some View {
@@ -15,6 +16,6 @@ struct GlassFloatingButton: View {
         }
         .glassControl(cornerRadius: 37, tint: .green.opacity(0.12))
         .shadow(color: .green.opacity(0.32), radius: 20, x: 0, y: 12)
-        .accessibilityLabel("Arbeitszeit hinzufügen")
+        .accessibilityLabel("home.addWorkTime".localized(language))
     }
 }

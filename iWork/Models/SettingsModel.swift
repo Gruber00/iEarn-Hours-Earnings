@@ -8,6 +8,7 @@ final class SettingsModel {
     var selectedLanguage: String = AppLanguage.german.languageCode
     var preferredHand: String = PreferredHand.left.rawValue
     var monthlyGoalAmount: Double = GoalService.defaultGoalAmount
+    var hasCompletedOnboarding: Bool = false
 
     init(
         hourlyRate: Double = 18.5,
@@ -15,7 +16,8 @@ final class SettingsModel {
         defaultPause: Int = 30,
         selectedLanguage: String = AppLanguage.german.languageCode,
         preferredHand: String = PreferredHand.left.rawValue,
-        monthlyGoalAmount: Double = GoalService.defaultGoalAmount
+        monthlyGoalAmount: Double = GoalService.defaultGoalAmount,
+        hasCompletedOnboarding: Bool = false
     ) {
         self.hourlyRate = hourlyRate
         self.currency = currency
@@ -23,6 +25,7 @@ final class SettingsModel {
         self.selectedLanguage = selectedLanguage
         self.preferredHand = preferredHand
         self.monthlyGoalAmount = monthlyGoalAmount
+        self.hasCompletedOnboarding = hasCompletedOnboarding
     }
 
     var appLanguage: AppLanguage {

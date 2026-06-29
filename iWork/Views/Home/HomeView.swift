@@ -5,16 +5,21 @@ struct HomeView: View {
     let entries: [WorkEntry]
     let settings: SettingsModel
     let language: AppLanguage
-    @Binding var selectedMonth: Date
+    let monthSelection: MonthSelectionViewModel
     @Binding var showingEditor: Bool
 
     @Environment(\.modelContext) private var modelContext
     @State private var editingEntry: WorkEntry?
     @State private var addButtonBounce = false
 
-    private var totalHours: Double { HomeViewModel.totalHours(for: entries) }
-    private var totalEarnings: Double { HomeViewModel.totalEarnings(for: entries) }
+    private var totals: StatisticsTotals { StatisticsCalculator.totals(entries) }
     private var preferredHand: PreferredHand { settings.preferredHandValue }
+    private var selectedMonth: Binding<Date> {
+        Binding(
+            get: { monthSelection.selectedMonth },
+            set: { monthSelection.select($0) }
+        )
+    }
 
     var body: some View {
         NavigationStack {
@@ -23,11 +28,11 @@ struct HomeView: View {
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 22) {
-                        MonthStepper(selectedMonth: $selectedMonth, language: language)
+                        MonthStepper(selectedMonth: selectedMonth, language: language)
 
                         EarningsCard(
-                            totalEarnings: totalEarnings,
-                            totalHours: totalHours,
+                            totalEarnings: totals.earnings,
+                            totalHours: totals.hours,
                             settings: settings,
                             language: language
                         )

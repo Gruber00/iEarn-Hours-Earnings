@@ -8,6 +8,8 @@ struct GoalPieChart: View {
     let language: AppLanguage
     let onTap: () -> Void
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         Button(action: onTap) {
             VStack(alignment: .leading, spacing: 16) {
@@ -22,7 +24,7 @@ struct GoalPieChart: View {
                             innerRadius: .ratio(0.64),
                             angularInset: 2
                         )
-                        .foregroundStyle(segment.id == "earned" ? Color.green.gradient : Color.gray.opacity(0.35).gradient)
+                        .foregroundStyle(segment.id == "earned" ? accentColor.gradient : Color.gray.opacity(0.35).gradient)
                     }
                     .chartLegend(.hidden)
                     .frame(height: 220)
@@ -34,7 +36,7 @@ struct GoalPieChart: View {
 
                         Text(progress.isGoalReached ? "goal.goalReached".localized(language) : "goal.goalProgress".localized(language))
                             .font(.caption.bold())
-                            .foregroundStyle(progress.isGoalReached ? .green : .secondary)
+                            .foregroundStyle(progress.isGoalReached ? accentColor : .secondary)
                     }
                 }
 
@@ -51,7 +53,7 @@ struct GoalPieChart: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(18)
-            .glassControl(cornerRadius: 28, tint: .green.opacity(0.08))
+            .glassControl(cornerRadius: 28, tint: accentColor.opacity(0.08))
         }
         .buttonStyle(.plain)
         .animation(.smooth, value: progress)

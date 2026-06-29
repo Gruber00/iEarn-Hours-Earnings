@@ -4,8 +4,13 @@ struct ConfettiOverlay: View {
     let isActive: Bool
     let trigger: Int
 
+    @Environment(\.appAccentColor) private var accentColor
+
     private let symbols = ["sparkle", "star.fill", "circle.fill", "seal.fill"]
-    private let colors: [Color] = [.green, .yellow, .blue, .pink, .purple, .orange]
+
+    private var colors: [Color] {
+        ThemeService.confettiColors(primary: accentColor)
+    }
 
     var body: some View {
         GeometryReader { proxy in

@@ -5,12 +5,18 @@ import Observation
 final class OnboardingViewModel {
     var step: OnboardingStep = .welcome
     var selectedLanguage: String
+    var currency: String
+    var accentColor: String
+    var chartStyle: String
     var preferredHand: String
     var monthlyGoalText: String
     var hourlyRateText: String
 
     init(settings: SettingsModel) {
         selectedLanguage = settings.selectedLanguage
+        currency = settings.currency
+        accentColor = settings.accentColor
+        chartStyle = settings.chartStyle
         preferredHand = settings.preferredHand
         monthlyGoalText = settings.monthlyGoalAmount.appDecimalText(language: settings.appLanguage)
         hourlyRateText = settings.hourlyRate.appDecimalText(language: settings.appLanguage)
@@ -59,6 +65,9 @@ final class OnboardingViewModel {
 
     func complete(settings: SettingsModel) {
         settings.selectedLanguage = selectedLanguage
+        settings.currency = currency
+        settings.accentColor = accentColor
+        settings.chartStyle = chartStyle
         settings.preferredHand = preferredHand
         settings.monthlyGoalAmount = monthlyGoalAmount
         settings.hourlyRate = hourlyRate
@@ -75,6 +84,9 @@ final class OnboardingViewModel {
 enum OnboardingStep: Int, CaseIterable {
     case welcome
     case language
+    case currency
+    case accentColor
+    case chartStyle
     case hand
     case goal
     case hourlyRate

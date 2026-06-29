@@ -6,8 +6,20 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C30D3E342FF067A300CF8510 /* icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = C30D3E332FF067A300CF8510 /* icon.icon */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		C30D3E332FF067A300CF8510 /* icon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = icon.icon; sourceTree = "<group>"; };
 		C31B0BB62FEF2B09004F1CC5 /* iWork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWork.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3328AA52FEFA5C000F148CA /* WorkingTimeRoundingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingTimeRoundingService.swift; sourceTree = "<group>"; };
+		C399A70A2FEF450D00A5F385 /* ChartStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartStyle.swift; sourceTree = "<group>"; };
+		C399A70B2FEF450D00A5F385 /* ChartInteractionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartInteractionService.swift; sourceTree = "<group>"; };
+		C399A70C2FEF450F00A5F385 /* StatisticsChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsChartViewModel.swift; sourceTree = "<group>"; };
+		C399A70D2FEF451000A5F385 /* ChartTooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTooltipView.swift; sourceTree = "<group>"; };
+		C399A70E2FEF451100A5F385 /* ChartStylePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartStylePicker.swift; sourceTree = "<group>"; };
+		C399A7112FEF459800A5F385 /* StatisticsChartDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsChartDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -41,6 +53,7 @@
 				C399A67C2FEF373500A5F385 /* Services */,
 				C399A67D2FEF373600A5F385 /* Extensions */,
 				C399A67E2FEF373A00A5F385 /* Views */,
+				C30D3E332FF067A300CF8510 /* icon.icon */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +75,7 @@
 		C399A6792FEF373200A5F385 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C399A70A2FEF450D00A5F385 /* ChartStyle.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -69,6 +83,7 @@
 		C399A67A2FEF373200A5F385 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				C399A70C2FEF450F00A5F385 /* StatisticsChartViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -83,6 +98,8 @@
 		C399A67C2FEF373500A5F385 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				C399A70B2FEF450D00A5F385 /* ChartInteractionService.swift */,
+				C3328AA52FEFA5C000F148CA /* WorkingTimeRoundingService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -115,6 +132,9 @@
 		C399A6802FEF373F00A5F385 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
+				C399A70D2FEF451000A5F385 /* ChartTooltipView.swift */,
+				C399A70E2FEF451100A5F385 /* ChartStylePicker.swift */,
+				C399A7112FEF459800A5F385 /* StatisticsChartDetailView.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -166,7 +186,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2650;
-				LastUpgradeCheck = 2650;
+				LastUpgradeCheck = 2660;
 				TargetAttributes = {
 					C31B0BB52FEF2B09004F1CC5 = {
 						CreatedOnToolsVersion = 26.5;
@@ -197,6 +217,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C30D3E342FF067A300CF8510 /* icon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +293,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -329,6 +351,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -337,7 +360,7 @@
 		C31B0BC22FEF2B0B004F1CC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = icon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -347,8 +370,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -369,7 +392,7 @@
 		C31B0BC32FEF2B0B004F1CC5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = icon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -379,8 +402,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

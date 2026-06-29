@@ -3,11 +3,13 @@ import SwiftUI
 struct EmptyMonthView: View {
     let language: AppLanguage
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         VStack(spacing: 12) {
             Image(systemName: "calendar.badge.plus")
                 .font(.system(size: 40, weight: .semibold))
-                .foregroundStyle(.green)
+                .foregroundStyle(accentColor)
                 .symbolRenderingMode(.hierarchical)
 
             Text("home.emptyTitle".localized(language))
@@ -21,5 +23,6 @@ struct EmptyMonthView: View {
         .frame(maxWidth: .infinity)
         .padding(28)
         .surfaceCard(cornerRadius: 28)
+        .animation(.smooth, value: accentColor)
     }
 }

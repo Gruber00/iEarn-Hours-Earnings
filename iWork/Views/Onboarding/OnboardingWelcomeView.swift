@@ -3,11 +3,13 @@ import SwiftUI
 struct OnboardingWelcomeView: View {
     let language: AppLanguage
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         VStack(spacing: 24) {
             Image(systemName: "clock.badge.checkmark")
                 .font(.system(size: 88, weight: .bold))
-                .foregroundStyle(.green)
+                .foregroundStyle(accentColor)
                 .symbolRenderingMode(.hierarchical)
                 .symbolEffect(.bounce, value: language.languageCode)
 
@@ -23,6 +25,6 @@ struct OnboardingWelcomeView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(28)
-        .glassControl(cornerRadius: 32, tint: .green.opacity(0.08))
+        .glassControl(cornerRadius: 32, tint: accentColor.opacity(0.08))
     }
 }

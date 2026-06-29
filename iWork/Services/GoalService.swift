@@ -23,8 +23,12 @@ struct GoalService {
     }
 
     static func progress(entries: [WorkEntry], goalAmount: Double) -> GoalProgress {
+        progress(earnedAmount: StatisticsCalculator.totalEarnings(entries), goalAmount: goalAmount)
+    }
+
+    static func progress(earnedAmount: Double, goalAmount: Double) -> GoalProgress {
         let goal = sanitizedGoalAmount(goalAmount)
-        let earned = max(StatisticsCalculator.totalEarnings(entries), 0)
+        let earned = max(earnedAmount, 0)
         let remaining = max(goal - earned, 0)
         let rawProgress = goal > 0 ? earned / goal : 0
         let safeProgress = rawProgress.isFinite ? max(rawProgress, 0) : 0

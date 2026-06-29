@@ -1,5 +1,7 @@
 import SwiftUI
 
 extension Color {
-    static let appAccentGreen = Color.green
+    static var appDefaultAccent: Color {
+        ThemeService.currentAccentColor
+    }
 }

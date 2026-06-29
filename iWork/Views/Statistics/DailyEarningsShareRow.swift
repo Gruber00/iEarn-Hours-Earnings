@@ -5,13 +5,15 @@ struct DailyEarningsShareRow: View {
     let currency: String
     let language: AppLanguage
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         HStack(spacing: 12) {
             Image(systemName: share.isTopDay ? "target" : "calendar")
                 .font(.subheadline.bold())
-                .foregroundStyle(share.isTopDay ? .green : .secondary)
+                .foregroundStyle(share.isTopDay ? accentColor : .secondary)
                 .frame(width: 34, height: 34)
-                .background((share.isTopDay ? Color.green : Color.gray).opacity(0.12), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                .background((share.isTopDay ? accentColor : Color.gray).opacity(0.12), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(share.date.appDayTitle(language: language))
@@ -20,7 +22,7 @@ struct DailyEarningsShareRow: View {
                 if share.isTopDay {
                     Text("goal.topEarningDay".localized(language))
                         .font(.caption)
-                        .foregroundStyle(.green)
+                        .foregroundStyle(accentColor)
                 }
             }
 
@@ -36,6 +38,7 @@ struct DailyEarningsShareRow: View {
             }
         }
         .padding(14)
-        .background(share.isTopDay ? Color.green.opacity(0.08) : Color.clear, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .background(share.isTopDay ? accentColor.opacity(0.08) : Color.clear, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .animation(.smooth, value: accentColor)
     }
 }

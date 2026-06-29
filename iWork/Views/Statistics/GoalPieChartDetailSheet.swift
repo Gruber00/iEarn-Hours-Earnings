@@ -8,6 +8,8 @@ struct GoalPieChartDetailSheet: View {
     let currency: String
     let language: AppLanguage
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -19,7 +21,7 @@ struct GoalPieChartDetailSheet: View {
                                 innerRadius: .ratio(0.66),
                                 angularInset: 2.5
                             )
-                            .foregroundStyle(segment.id == "earned" ? Color.green.gradient : Color.gray.opacity(0.35).gradient)
+                            .foregroundStyle(segment.id == "earned" ? accentColor.gradient : Color.gray.opacity(0.35).gradient)
                         }
                         .chartLegend(.hidden)
                         .frame(height: 300)
@@ -27,16 +29,16 @@ struct GoalPieChartDetailSheet: View {
                         VStack(spacing: 6) {
                             Image(systemName: progress.isGoalReached ? "target" : "chart.pie.fill")
                                 .font(.title2.bold())
-                                .foregroundStyle(.green)
+                                .foregroundStyle(accentColor)
                             Text(progress.percentText)
                                 .font(.system(size: 42, weight: .heavy, design: .rounded))
                             Text(progress.isGoalReached ? "goal.goalReached".localized(language) : "goal.goalProgress".localized(language))
                                 .font(.headline)
-                                .foregroundStyle(progress.isGoalReached ? .green : .secondary)
+                                .foregroundStyle(progress.isGoalReached ? accentColor : .secondary)
                         }
                     }
                     .padding(18)
-                    .glassControl(cornerRadius: 30, tint: .green.opacity(0.08))
+                    .glassControl(cornerRadius: 30, tint: accentColor.opacity(0.08))
 
                     VStack(spacing: 12) {
                         LabeledContent("goal.monthlyGoal".localized(language), value: progress.goalAmount.formattedMoney(currency: currency, language: language))

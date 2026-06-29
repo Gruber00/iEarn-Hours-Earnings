@@ -6,6 +6,8 @@ struct OnboardingHourlyRateView: View {
     let language: AppLanguage
     let isValid: Bool
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             OnboardingHeader(
@@ -25,7 +27,7 @@ struct OnboardingHourlyRateView: View {
                         .foregroundStyle(.secondary)
                 }
                 .padding(18)
-                .glassControl(cornerRadius: 24, tint: .green.opacity(0.08))
+                .glassControl(cornerRadius: 24, tint: accentColor.opacity(0.08))
 
                 if !isValid {
                     Text("onboarding.invalidAmount".localized(language))

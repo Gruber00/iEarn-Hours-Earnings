@@ -4,6 +4,8 @@ struct OnboardingLanguageView: View {
     @Binding var selectedLanguage: String
     let language: AppLanguage
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             OnboardingHeader(
@@ -25,7 +27,7 @@ struct OnboardingLanguageView: View {
                             Spacer()
                             if selectedLanguage == appLanguage.languageCode {
                                 Image(systemName: "checkmark.circle.fill")
-                                    .foregroundStyle(.green)
+                                    .foregroundStyle(accentColor)
                             }
                         }
                         .padding(16)

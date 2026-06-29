@@ -5,6 +5,8 @@ struct SuccessOverlay: View {
     let message: String
     let trigger: Int
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         if isVisible {
             ZStack {
@@ -14,7 +16,7 @@ struct SuccessOverlay: View {
                 VStack(spacing: 18) {
                     Image(systemName: "checkmark.circle.fill")
                         .font(.system(size: 118, weight: .bold))
-                        .foregroundStyle(.green)
+                        .foregroundStyle(accentColor)
                         .symbolRenderingMode(.hierarchical)
                         .symbolEffect(.bounce, value: trigger)
 
@@ -26,12 +28,13 @@ struct SuccessOverlay: View {
                 }
                 .padding(30)
                 .frame(maxWidth: 330)
-                .glassControl(cornerRadius: 34, tint: .green.opacity(0.10))
+                .glassControl(cornerRadius: 34, tint: accentColor.opacity(0.10))
                 .scaleEffect(isVisible ? 1 : 0.82)
                 .opacity(isVisible ? 1 : 0)
             }
             .transition(.opacity.combined(with: .scale(scale: 0.86)))
             .zIndex(20)
+            .animation(.smooth, value: accentColor)
         }
     }
 }

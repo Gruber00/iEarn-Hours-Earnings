@@ -4,6 +4,8 @@ struct OnboardingHandView: View {
     @Binding var preferredHand: String
     let language: AppLanguage
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             OnboardingHeader(
@@ -25,7 +27,7 @@ struct OnboardingHandView: View {
                             Spacer()
                             if preferredHand == hand.rawValue {
                                 Image(systemName: "checkmark.circle.fill")
-                                    .foregroundStyle(.green)
+                                    .foregroundStyle(accentColor)
                             }
                         }
                         .padding(16)

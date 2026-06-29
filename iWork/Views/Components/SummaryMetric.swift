@@ -5,11 +5,13 @@ struct SummaryMetric: View {
     let value: String
     let symbol: String
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Image(systemName: symbol)
                 .font(.title3)
-                .foregroundStyle(.green)
+                .foregroundStyle(accentColor)
                 .symbolRenderingMode(.hierarchical)
 
             Text(title)
@@ -26,5 +28,6 @@ struct SummaryMetric: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)
         .background(.quaternary.opacity(0.55), in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .animation(.smooth, value: accentColor)
     }
 }

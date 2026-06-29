@@ -5,13 +5,15 @@ struct StatisticRow: View {
     let value: String
     let symbol: String
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         HStack(spacing: 12) {
             Image(systemName: symbol)
                 .font(.subheadline.bold())
-                .foregroundStyle(.green)
+                .foregroundStyle(accentColor)
                 .frame(width: 36, height: 36)
-                .background(.green.opacity(0.12), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                .background(accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
 
             Text(title)
                 .font(.subheadline)
@@ -27,5 +29,6 @@ struct StatisticRow: View {
         }
         .padding(14)
         .surfaceCard(cornerRadius: 20)
+        .animation(.smooth, value: accentColor)
     }
 }

@@ -12,13 +12,14 @@ struct OnboardingView: View {
     var body: some View {
         @Bindable var viewModel = viewModel
         let language = viewModel.language
+        let accentColor = ThemeService.accentColor(for: viewModel.accentColor)
 
         ZStack {
             AppBackground()
 
             VStack(spacing: 20) {
                 ProgressView(value: viewModel.progress)
-                    .tint(.green)
+                    .tint(accentColor)
                     .padding(.horizontal, 28)
                     .padding(.top, 20)
 
@@ -28,29 +29,37 @@ struct OnboardingView: View {
                         OnboardingWelcomeView(language: language)
                     case .language:
                         OnboardingLanguageView(selectedLanguage: $viewModel.selectedLanguage, language: language)
+                    case .currency:
+                        OnboardingCurrencyView(currency: $viewModel.currency, language: language)
+                    case .accentColor:
+                        OnboardingAccentColorView(selectedAccentColor: $viewModel.accentColor, language: language)
+                    case .chartStyle:
+                        OnboardingChartStyleView(chartStyle: $viewModel.chartStyle, language: language)
                     case .hand:
                         OnboardingHandView(preferredHand: $viewModel.preferredHand, language: language)
                     case .goal:
                         OnboardingGoalView(
                             monthlyGoalText: $viewModel.monthlyGoalText,
-                            currency: settings.currency,
+                            currency: viewModel.currency,
                             language: language,
                             isValid: viewModel.canAdvance
                         )
                     case .hourlyRate:
                         OnboardingHourlyRateView(
                             hourlyRateText: $viewModel.hourlyRateText,
-                            currency: settings.currency,
+                            currency: viewModel.currency,
                             language: language,
                             isValid: viewModel.canAdvance
                         )
                     case .summary:
                         OnboardingSummaryView(
                             selectedLanguage: viewModel.selectedLanguage,
+                            currency: viewModel.currency,
+                            accentColor: viewModel.accentColor,
+                            chartStyle: viewModel.chartStyle,
                             preferredHand: viewModel.preferredHand,
                             monthlyGoalAmount: viewModel.monthlyGoalAmount,
                             hourlyRate: viewModel.hourlyRate,
-                            currency: settings.currency,
                             language: language
                         )
                     }
@@ -61,37 +70,34 @@ struct OnboardingView: View {
                 .animation(.smooth, value: viewModel.step)
 
                 controls(language: language)
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 24)
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 20)
             }
         }
         .environment(\.locale, language.locale)
+        .environment(\.appAccentColor, accentColor)
+        .tint(accentColor)
+        .animation(.smooth, value: viewModel.accentColor)
     }
 
-    @ViewBuilder
     private func controls(language: AppLanguage) -> some View {
-        HStack(spacing: 14) {
-            if viewModel.canGoBack {
-                Button("onboarding.back".localized(language)) {
-                    withAnimation(.snappy) {
-                        viewModel.goBack()
-                    }
-                }
-                .glassButtonIfAvailable()
+        OnboardingNavigationButtons(
+            language: language,
+            canGoBack: viewModel.canGoBack,
+            canAdvance: viewModel.canAdvance,
+            primaryTitle: primaryButtonTitle(language: language)
+        ) {
+            withAnimation(.snappy) {
+                viewModel.goBack()
             }
-
-            Button(primaryButtonTitle(language: language)) {
-                withAnimation(.snappy) {
-                    if viewModel.step == .summary {
-                        viewModel.complete(settings: settings)
-                    } else {
-                        viewModel.goNext()
-                    }
+        } primaryAction: {
+            withAnimation(.snappy) {
+                if viewModel.step == .summary {
+                    viewModel.complete(settings: settings)
+                } else {
+                    viewModel.goNext()
                 }
             }
-            .glassProminentIfAvailable()
-            .disabled(!viewModel.canAdvance)
-            .frame(maxWidth: .infinity)
         }
     }
 
@@ -108,6 +114,8 @@ struct OnboardingView: View {
 }
 
 struct OnboardingHeader: View {
+    @Environment(\.appAccentColor) private var accentColor
+
     let symbol: String
     let title: String
     let subtitle: String
@@ -116,7 +124,7 @@ struct OnboardingHeader: View {
         VStack(alignment: .leading, spacing: 14) {
             Image(systemName: symbol)
                 .font(.system(size: 54, weight: .bold))
-                .foregroundStyle(.green)
+                .foregroundStyle(accentColor)
                 .symbolRenderingMode(.hierarchical)
 
             VStack(alignment: .leading, spacing: 8) {

@@ -2,7 +2,7 @@ import Foundation
 
 struct TrophiesViewModel {
     static func sortedBadges(_ badges: [AchievementBadge]) -> [AchievementBadge] {
-        badges.sorted { $0.requiredAmount < $1.requiredAmount }
+        AchievementService.uniquePreferredBadges(from: badges)
     }
 
     static func totalEarnings(from entries: [WorkEntry]) -> Double {
@@ -40,6 +40,9 @@ struct TrophiesViewModel {
         case 100: "trophies.100.\(suffix)"
         case 500: "trophies.500.\(suffix)"
         case 1_000: "trophies.1000.\(suffix)"
+        case 10_000: "trophies.10000.\(suffix)"
+        case 20_000: "trophies.20000.\(suffix)"
+        case 50_000: "trophies.50000.\(suffix)"
         default: suffix == "title" ? badge.title : badge.descriptionText
         }
     }

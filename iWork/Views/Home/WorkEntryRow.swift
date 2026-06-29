@@ -5,13 +5,15 @@ struct WorkEntryRow: View {
     let settings: SettingsModel
     let language: AppLanguage
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         HStack(spacing: 14) {
             Image(systemName: "briefcase.fill")
                 .font(.headline)
-                .foregroundStyle(.green)
+                .foregroundStyle(accentColor)
                 .frame(width: 42, height: 42)
-                .background(.green.opacity(0.12), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                .background(accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
 
             VStack(alignment: .leading, spacing: 5) {
                 Text(entry.date.appDayTitle(language: language))
@@ -30,11 +32,12 @@ struct WorkEntryRow: View {
 
                 Text(entry.earnedMoney.formattedMoney(currency: settings.currency, language: language))
                     .font(.subheadline.bold())
-                    .foregroundStyle(.green)
+                    .foregroundStyle(accentColor)
                     .contentTransition(.numericText())
             }
         }
         .padding(16)
         .surfaceCard(cornerRadius: 24)
+        .animation(.smooth, value: accentColor)
     }
 }

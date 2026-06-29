@@ -6,6 +6,8 @@ struct MonthlySummaryView: View {
     let settings: SettingsModel
     let language: AppLanguage
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             VStack(alignment: .leading, spacing: 6) {
@@ -15,7 +17,7 @@ struct MonthlySummaryView: View {
 
                 Text(totalEarnings.formattedMoney(currency: settings.currency, language: language))
                     .font(.system(size: 60, weight: .heavy, design: .rounded))
-                    .foregroundStyle(.green)
+                    .foregroundStyle(accentColor)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                     .contentTransition(.numericText())
@@ -39,5 +41,6 @@ struct MonthlySummaryView: View {
         .surfaceCard(cornerRadius: 32)
         .animation(.smooth, value: totalEarnings)
         .animation(.smooth, value: totalHours)
+        .animation(.smooth, value: accentColor)
     }
 }

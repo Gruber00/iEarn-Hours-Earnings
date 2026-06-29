@@ -8,36 +8,38 @@ struct ContentView: View {
     @Query(sort: \AchievementBadge.requiredAmount) private var badges: [AchievementBadge]
 
     @State private var selectedTab = AppTab.home
-    @State private var selectedMonth = Date()
+    @State private var monthSelection = MonthSelectionViewModel()
     @State private var showingEditor = false
 
     private var achievementEvaluationSignature: String {
         let entrySignature = entries
             .map { "\($0.id.uuidString)-\($0.workedHours)-\($0.earnedMoney)" }
             .joined(separator: "|")
-        let settingsSignature = settingsItems.first.map { "\($0.hourlyRate)-\($0.currency)-\($0.selectedLanguage)-\($0.hasCompletedOnboarding)" } ?? "no-settings"
-        let badgeSignature = badges
-            .map { "\($0.requiredAmount)-\($0.isUnlocked)-\($0.unlockedAt?.timeIntervalSince1970 ?? 0)" }
-            .joined(separator: "|")
-        return entrySignature + settingsSignature + badgeSignature
+        let settingsSignature = settingsItems.first.map { "\($0.hourlyRate)-\($0.monthlyGoalAmount)" } ?? "no-settings"
+        return entrySignature + settingsSignature
     }
 
     var body: some View {
         Group {
             if let settings = settingsItems.first {
                 let language = settings.appLanguage
+                let accentColor = ThemeService.accentColor(for: settings)
 
                 if settings.hasCompletedOnboarding {
                     mainApp(settings: settings, language: language)
+                        .environment(\.appAccentColor, accentColor)
+                        .transition(.opacity.combined(with: .scale(scale: 0.96)))
                 } else {
                     OnboardingView(settings: settings)
                         .environment(\.locale, language.locale)
+                        .transition(.opacity.combined(with: .scale(scale: 0.96)))
                 }
             } else {
                 ProgressView()
                     .task { preparePersistentData() }
             }
         }
+        .animation(.smooth, value: settingsItems.first?.hasCompletedOnboarding ?? false)
         .onAppear(perform: preparePersistentData)
         .onChange(of: achievementEvaluationSignature) { _, _ in
             preparePersistentData()
@@ -48,16 +50,16 @@ struct ContentView: View {
     private func mainApp(settings: SettingsModel, language: AppLanguage) -> some View {
         TabView(selection: $selectedTab) {
             HomeView(
-                entries: HomeViewModel.monthEntries(from: entries, selectedMonth: selectedMonth),
+                entries: HomeViewModel.monthEntries(from: entries, selectedMonth: monthSelection.selectedMonth),
                 settings: settings,
                 language: language,
-                selectedMonth: $selectedMonth,
+                monthSelection: monthSelection,
                 showingEditor: $showingEditor
             )
             .tag(AppTab.home)
             .tabItem { Label("tab.home".localized(language), systemImage: "house.fill") }
 
-            StatisticsView(entries: entries, settings: settings, language: language)
+            StatisticsView(entries: entries, settings: settings, language: language, monthSelection: monthSelection)
                 .tag(AppTab.statistics)
                 .tabItem { Label("tab.statistics".localized(language), systemImage: "chart.bar.fill") }
 
@@ -69,10 +71,11 @@ struct ContentView: View {
                 .tag(AppTab.settings)
                 .tabItem { Label("tab.settings".localized(language), systemImage: "gearshape.fill") }
         }
-        .tint(.green)
+        .tint(ThemeService.accentColor(for: settings))
         .environment(\.locale, language.locale)
         .animation(.snappy, value: selectedTab)
         .animation(.snappy, value: settings.selectedLanguage)
+        .animation(.smooth, value: settings.accentColor)
         .sheet(isPresented: $showingEditor) {
             AddWorkEntrySheet(entry: nil, settings: settings, language: language)
                 .environment(\.locale, language.locale)
@@ -86,6 +89,10 @@ struct ContentView: View {
         DatabaseManager.ensureSettingsExist(settings: settingsItems, in: modelContext)
         DatabaseManager.ensureAchievementBadgesExist(badges: badges, in: modelContext)
         AchievementService.evaluateBadges(entries: entries, badges: badges)
+
+        if modelContext.hasChanges {
+            try? modelContext.save()
+        }
     }
 }
 

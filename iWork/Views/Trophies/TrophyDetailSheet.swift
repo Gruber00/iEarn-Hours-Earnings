@@ -6,13 +6,15 @@ struct TrophyDetailSheet: View {
     let currency: String
     let language: AppLanguage
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 22) {
                     Image(systemName: badge.symbolName)
                         .font(.system(size: 82, weight: .bold))
-                        .foregroundStyle(badge.isUnlocked ? .yellow : .gray)
+                        .foregroundStyle(badge.isUnlocked ? accentColor : .gray)
                         .symbolRenderingMode(.hierarchical)
                         .symbolEffect(.bounce, value: badge.isUnlocked)
                         .padding(.top, 24)
@@ -36,15 +38,15 @@ struct TrophyDetailSheet: View {
                         if let unlockedText = TrophiesViewModel.unlockedDateText(for: badge, language: language) {
                             Text(unlockedText)
                                 .font(.subheadline.weight(.semibold))
-                                .foregroundStyle(.green)
+                                .foregroundStyle(accentColor)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         } else {
                             ProgressView(value: TrophiesViewModel.progress(for: badge, totalEarnings: totalEarnings))
-                                .tint(.green)
+                                .tint(accentColor)
                         }
                     }
                     .padding(20)
-                    .glassControl(cornerRadius: 28, tint: badge.isUnlocked ? .yellow.opacity(0.10) : .gray.opacity(0.06))
+                    .glassControl(cornerRadius: 28, tint: badge.isUnlocked ? accentColor.opacity(0.10) : .gray.opacity(0.06))
                 }
                 .padding(20)
             }

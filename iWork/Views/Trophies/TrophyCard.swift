@@ -6,11 +6,13 @@ struct TrophyCard: View {
     let currency: String
     let language: AppLanguage
 
+    @Environment(\.appAccentColor) private var accentColor
+
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             Image(systemName: badge.symbolName)
                 .font(.system(size: 44, weight: .bold))
-                .foregroundStyle(badge.isUnlocked ? .yellow : .gray)
+                .foregroundStyle(badge.isUnlocked ? accentColor : .gray)
                 .symbolRenderingMode(.hierarchical)
                 .symbolEffect(.bounce, value: badge.isUnlocked)
 
@@ -34,7 +36,7 @@ struct TrophyCard: View {
                         .foregroundStyle(.secondary)
                 } else {
                     ProgressView(value: TrophiesViewModel.progress(for: badge, totalEarnings: totalEarnings))
-                        .tint(.green)
+                        .tint(accentColor)
 
                     Text(TrophiesViewModel.progressText(for: badge, totalEarnings: totalEarnings, currency: currency, language: language))
                         .font(.caption)
@@ -45,17 +47,17 @@ struct TrophyCard: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)
-        .trophyCardStyle(isUnlocked: badge.isUnlocked)
+        .trophyCardStyle(isUnlocked: badge.isUnlocked, accentColor: accentColor)
     }
 }
 
 private extension View {
     @ViewBuilder
-    func trophyCardStyle(isUnlocked: Bool) -> some View {
+    func trophyCardStyle(isUnlocked: Bool, accentColor: Color) -> some View {
         if isUnlocked {
             self
-                .glassControl(cornerRadius: 28, tint: .yellow.opacity(0.10))
-                .shadow(color: .yellow.opacity(0.25), radius: 18, x: 0, y: 10)
+                .glassControl(cornerRadius: 28, tint: accentColor.opacity(0.10))
+                .shadow(color: accentColor.opacity(0.25), radius: 18, x: 0, y: 10)
         } else {
             self
                 .glassControl(cornerRadius: 28, tint: .gray.opacity(0.06))

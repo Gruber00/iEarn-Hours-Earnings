@@ -2,32 +2,43 @@ import Foundation
 
 struct DateHelper {
     static func monthTitle(_ date: Date, language: AppLanguage) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = language.locale
-        formatter.setLocalizedDateFormatFromTemplate("MMMM yyyy")
-        return formatter.string(from: date)
+        date.formatted(
+            .dateTime
+                .month(.wide)
+                .year()
+                .locale(language.locale)
+        )
     }
 
     static func dayTitle(_ date: Date, language: AppLanguage) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = language.locale
-        formatter.setLocalizedDateFormatFromTemplate("d MMMM")
-        return formatter.string(from: date)
+        date.formatted(
+            .dateTime
+                .day()
+                .month(.wide)
+                .locale(language.locale)
+        )
     }
 
     static func dateTimeText(_ date: Date, language: AppLanguage) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = language.locale
-        formatter.dateFormat = dateTimeFormat(for: language)
-        return formatter.string(from: date)
+        switch language {
+        case .german:
+            date.formatted(.dateTime.day().month(.twoDigits).year().hour(.twoDigits(amPM: .omitted)).minute(.twoDigits).locale(language.locale))
+        case .english:
+            date.formatted(.dateTime.month(.abbreviated).day().year().hour().minute(.twoDigits).locale(language.locale))
+        case .spanish:
+            date.formatted(.dateTime.day().month(.abbreviated).year().hour(.twoDigits(amPM: .omitted)).minute(.twoDigits).locale(language.locale))
+        case .french:
+            date.formatted(.dateTime.day().month(.wide).year().hour(.twoDigits(amPM: .omitted)).minute(.twoDigits).locale(language.locale))
+        }
     }
 
     static func timeText(_ date: Date, language: AppLanguage) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = language.locale
-        formatter.timeStyle = .short
-        formatter.dateStyle = .none
-        return formatter.string(from: date)
+        date.formatted(
+            .dateTime
+                .hour()
+                .minute(.twoDigits)
+                .locale(language.locale)
+        )
     }
 
     static func dateAt(hour: Int, minute: Int, matching baseDate: Date = .now) -> Date {
@@ -40,18 +51,5 @@ struct DateHelper {
 
     static func addingMonths(_ value: Int, to date: Date) -> Date {
         Calendar.current.date(byAdding: .month, value: value, to: date) ?? date
-    }
-
-    private static func dateTimeFormat(for language: AppLanguage) -> String {
-        switch language {
-        case .german:
-            "dd.MM.yyyy, HH:mm"
-        case .english:
-            "MMM d, yyyy, h:mm a"
-        case .spanish:
-            "d MMM yyyy, HH:mm"
-        case .french:
-            "d MMMM yyyy, HH:mm"
-        }
     }
 }

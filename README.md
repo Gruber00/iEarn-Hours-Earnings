@@ -1,5 +1,5 @@
 <img width="1254" height="1254" alt="icon" src="https://github.com/user-attachments/assets/c6eb3e24-8956-4f5d-80fc-6903d08f44dc" />
-# Work Hours
+
 
 Track your work. Calculate your earnings. Reach your goals.
 
